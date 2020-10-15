@@ -1,0 +1,49 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+  <changeSet author="mleczey" id="create-table-warehouse">
+    <createTable tableName="CAMPAIGN">
+      <column autoIncrement="true" name="ID" type="INT">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CAMPAIGN"/>
+      </column>
+      <column name="DATASOURCE" type="VARCHAR(64)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="CAMPAIGN" type="VARCHAR(128)">
+        <constraints nullable="false"/>
+      </column>
+      <column name="DAY" type="DATE">
+        <constraints nullable="false"/>
+      </column>
+      <column name="CLICKS" type="INT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="IMPRESSIONS" type="INT">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+  <changeSet author="mleczey" id="load-data-warehouse">
+    <loadData catalogName="warehouse"
+              commentLineStartsWith="//"
+              encoding="UTF-8"
+              file="converted_warehouse_data.csv"
+              quotchar="'"
+              relativeToChangelogFile="true"
+              schemaName="warehouse"
+              separator=","
+              tableName="CAMPAIGN">
+      <column index="0" name="DATASOURCE" type="STRING"/>
+      <column index="1" name="CAMPAIGN" type="STRING"/>
+      <column index="2" name="DAY" type="STRING"/>
+      <column index="3" name="CLICKS" type="NUMERIC"/>
+      <column index="4" name="IMPRESSIONS" type="NUMERIC"/>
+    </loadData>
+  </changeSet>
+</databaseChangeLog>
